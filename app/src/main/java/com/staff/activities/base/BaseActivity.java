@@ -11,7 +11,7 @@ public abstract class BaseActivity extends AbsBaseActivity implements View.OnCli
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
- //////
+ /////////
     }
 
 }
