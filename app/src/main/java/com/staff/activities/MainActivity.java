@@ -1,14 +1,16 @@
 package com.staff.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import com.jauker.widget.BadgeView;
+import com.staff.activities.base.BaseActivity;
 import com.staff.main.R;
 
-public class MainActivity extends Activity {
+public class MainActivity extends BaseActivity {
     private int count = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,9 +23,13 @@ public class MainActivity extends Activity {
         btn_test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                badgeView.setBadgeCount(++count);
+               startActivity(new Intent(MainActivity.this,QRCodeCaptureActivity.class));
             }
         });
     }
 
+    @Override
+    public void onClick(View v) {
+
+    }
 }

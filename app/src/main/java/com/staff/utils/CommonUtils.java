@@ -1,12 +1,14 @@
 package com.staff.utils;
 
 import android.text.TextUtils;
+import android.text.util.Linkify;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -232,4 +234,72 @@ public class CommonUtils {
         }
         return flag;
     }
+
+    /**
+     * 自定义middle()方法：取出语义理解返回的文本结果中的特定结果
+     *
+     * @param input
+     *            （字符串结果）,index（ 截取开始的字符串位置，以1开始）,endPos（截取结束的字符串位置）
+     */
+    public static String middle(String input, int index, int count) {
+        if (input.isEmpty()) {
+            return "";
+        }
+        count = (count > input.length() - index + 1) ? input.length()
+                - index + 1 : count;
+        return input.substring(index - 1, index + count - 1);
+    }
+
+    /**
+     * 判断是否text中是否含有小写字母
+     * @param text
+     * @return
+     */
+    public static boolean isHaveLowerCase(String text) {
+        return Pattern.compile("(?i)[a-z]").matcher(text).find();
+    }
+
+    /**
+     * 设置字母为大写
+     * @param text
+     * @return
+     */
+    public static String setUpperCase(String text) {
+        if (isHaveLowerCase(text)) {
+
+            text = text.toUpperCase(Locale.getDefault());
+        }
+        return text;
+    }
+
+    public static final String makeUrl(String url, String[] prefixes,
+                                       Matcher m, Linkify.TransformFilter filter) {
+        if (filter != null) {
+            url = filter.transformUrl(m, url);
+        }
+
+        boolean hasPrefix = false;
+
+        for (int i = 0; i < prefixes.length; i++) {
+            if (url.regionMatches(true, 0, prefixes[i], 0,
+                    prefixes[i].length())) {
+                hasPrefix = true;
+
+                // Fix capitalization if necessary
+                if (!url.regionMatches(false, 0, prefixes[i], 0,
+                        prefixes[i].length())) {
+                    url = prefixes[i] + url.substring(prefixes[i].length());
+                }
+
+                break;
+            }
+        }
+
+        if (!hasPrefix) {
+            url = prefixes[0] + url;
+        }
+
+        return url;
+    }
+
 }
