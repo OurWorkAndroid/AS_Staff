@@ -7,6 +7,11 @@ import java.util.regex.Pattern;
  */
 public class ValidatorUtils {
 
+    private ValidatorUtils()
+    {
+        /* cannot be instantiated */
+        throw new UnsupportedOperationException("cannot be instantiated");
+    }
     /**
      * 正则表达式：验证手机号
      */

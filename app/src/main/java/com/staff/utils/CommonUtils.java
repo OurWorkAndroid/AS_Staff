@@ -12,6 +12,10 @@ import java.util.regex.Pattern;
 
 public class CommonUtils {
 
+    private CommonUtils(){
+        throw new UnsupportedOperationException("cannot be instantiated");
+    }
+
     private static long lastClickTime;
     private static long customerlastClickTime;
 

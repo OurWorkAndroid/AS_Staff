@@ -7,6 +7,12 @@ import android.util.DisplayMetrics;
 import java.lang.reflect.Field;
 
 public class DensityUtils {
+    private DensityUtils()
+    {
+        /* cannot be instantiated */
+        throw new UnsupportedOperationException("cannot be instantiated");
+    }
+
 	public static int getScreenWidth(Context context){
 		DisplayMetrics metric = new DisplayMetrics();
 		((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(metric);

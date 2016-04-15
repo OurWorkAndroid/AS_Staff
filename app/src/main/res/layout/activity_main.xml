@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.staff.main.MainActivity">
+    tools:context="com.staff.activities.MainActivity">
 
 
 </LinearLayout>

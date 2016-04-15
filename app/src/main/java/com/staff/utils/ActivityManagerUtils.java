@@ -12,11 +12,11 @@ import java.util.List;
  *
  * @author 邓耀宁
  */
-public class ActivityManagerToolUtils {
+public class ActivityManagerUtils {
 
     private final List<Activity> activities = new LinkedList<Activity>();
 
-    private static ActivityManagerToolUtils manager;
+    private static ActivityManagerUtils manager;
 
     private boolean isExist = false;// activity 存在标志
 
@@ -29,9 +29,9 @@ public class ActivityManagerToolUtils {
      *
      * @return
      */
-    public static ActivityManagerToolUtils getActivityManager() {
+    public static ActivityManagerUtils getActivityManager() {
         if (null == manager) {
-            manager = new ActivityManagerToolUtils();
+            manager = new ActivityManagerUtils();
         }
         return manager;
     }

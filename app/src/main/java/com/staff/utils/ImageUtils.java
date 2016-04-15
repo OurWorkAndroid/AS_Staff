@@ -31,7 +31,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class ImageUtil {
+public class ImageUtils {
+
+	private ImageUtils()
+	{
+        /* cannot be instantiated */
+		throw new UnsupportedOperationException("cannot be instantiated");
+	}
+
 	/**
      * 旋转bitmap
      * @param bitmap 缩放的二位图

@@ -16,6 +16,13 @@ import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 public class GZIPUtils {
+
+	private GZIPUtils()
+	{
+        /* cannot be instantiated */
+		throw new UnsupportedOperationException("cannot be instantiated");
+	}
+
 	public static final int BUFFER = 1024;
 	public static final String EXT = ".gz";
 	

@@ -21,6 +21,12 @@ import java.util.regex.Pattern;
  */
 public class StringUtils {
 
+    private StringUtils()
+    {
+        /* cannot be instantiated */
+        throw new UnsupportedOperationException("cannot be instantiated");
+    }
+
     /**
      * 判断字符串是否为空
      * @param value
