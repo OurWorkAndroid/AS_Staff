@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="pull_to_refresh_hint_color">#888888</color>
+</resources>
