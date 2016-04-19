@@ -163,8 +163,13 @@ public final class QRCodeCaptureActivity extends BaseActivity implements Surface
 	}
 
 	@Override
+	public boolean onPullDownRefreshAllData() {
+		return false;
+	}
+
+	@Override
 	public int getContentLayoutID() {
-		return 1;
+		return 0;
 	}
 
 

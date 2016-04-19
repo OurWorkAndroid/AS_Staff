@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="15dp"
+    >
+
+    <RelativeLayout
+        android:id="@+id/rLayout_approval_head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <com.staff.customviews.CircleImageView
+            android:id="@+id/iv_approval_head"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/icon_edittext_clear_nor"
+            android:layout_centerVertical="true"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/iv_approval_head"
+            android:layout_marginLeft="20dp"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/tv_approval_name"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:textSize="14sp"
+                android:textColor="@color/red"
+                android:text="Daemon"
+                android:gravity="center_vertical"
+                />
+
+            <TextView
+                android:id="@+id/tv_approval_time"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:textSize="13sp"
+                android:textColor="@color/font_gray"
+                android:text="2015-12-20 10:10"
+                android:gravity="center_vertical"
+                />
+
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/login_password_hide"
+            />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_approval_flow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rLayout_approval_head"
+        android:layout_marginTop="10dp"
+        android:textColor="#000000"
+        android:textSize="14sp"
+        android:text="请假申请流程"
+        />
+
+    <TextView
+        android:id="@+id/tv_approval_reason"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_approval_flow"
+        android:layout_marginTop="5dp"
+        android:textColor="#000000"
+        android:textSize="14sp"
+        android:text="理由:生病"
+        />
+
+    <TextView
+        android:id="@+id/tv_approval_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_approval_reason"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/red"
+        android:textSize="14sp"
+        android:text="状态:等待我的审批"
+        />
+</RelativeLayout>

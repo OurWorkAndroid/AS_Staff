@@ -1,20 +1,21 @@
 package com.staff.activities.base;
 
-import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.staff.main.R;
+import com.staff.utils.NetworkUtils;
 import com.staff.utils.StringUtils;
-
-import java.io.PrintStream;
 
 /**
  * 名称: BaseActivity <br/>
@@ -23,6 +24,9 @@ import java.io.PrintStream;
 public abstract class BaseActivity extends AbsBaseActivity implements View.OnClickListener {
 
     private Toast mToast;
+    private SwipeRefreshLayout mRefreshView;
+    private long mLastRefreshTime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,11 +40,74 @@ public abstract class BaseActivity extends AbsBaseActivity implements View.OnCli
         setTitleLeftView(null);
         setTitleCenterView(null);
         setTitleRightView(null);
-        try {
-            View view = LayoutInflater.from(this).inflate(getContentLayoutID(),rootView,false);
-            if(view!=null)rootView.addView(view);
-        }catch (Exception e){
-            e.printStackTrace();
+
+        if (findViewById(R.id.refreshLayout) instanceof SwipeRefreshLayout) {
+            mRefreshView = (SwipeRefreshLayout)findViewById(R.id.refreshLayout);
+//            mRefreshView.setColorSchemeResources(R.color.white,
+//                    R.color.bg_gray,
+//                    R.color.blue,
+//                    R.color.theme);
+            mRefreshView.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.theme));
+            mRefreshView.setProgressViewEndTarget(true,100);
+            mRefreshView.setDistanceToTriggerSync(200);
+
+            mRefreshView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    if (!NetworkUtils.isNetworkAvailable(BaseActivity.this)) {
+                        showTip("网络不给力");
+                        mRefreshView.setRefreshing(false);
+                    } else {
+                        long curTime = SystemClock.uptimeMillis();
+                        if ((curTime - mLastRefreshTime) > 5000) { // 60 * 1000 (1分钟)
+                            onPullDownRefreshAllData();
+                        } else {
+                            showTip("已经是最新数据了!");
+                        }
+                        mRefreshView.setRefreshing(false);
+                        mLastRefreshTime = curTime;
+                    }
+                }
+            });
+            try {
+                View view = LayoutInflater.from(this).inflate(getContentLayoutID(),mRefreshView,false);
+                if(view!=null)mRefreshView.addView(view);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    /**
+     * 下拉刷新所有数据
+     */
+    public abstract boolean onPullDownRefreshAllData();
+
+    /**
+     * 解决滑动冲突
+     * @param view
+     */
+    protected void resolveRefreshScrollConflict(AbsListView view){
+        if(view != null && mRefreshView != null){
+            view.setOnScrollListener(new AbsListView.OnScrollListener()
+            {
+                @Override
+                public void onScrollStateChanged(AbsListView absListView, int i)
+                {
+                }
+
+                @Override
+                public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount)
+                {
+                    View firstView = absListView.getChildAt(firstVisibleItem);
+                    if (firstVisibleItem == 0 && (firstView == null || firstView.getTop() == 0)) {
+                        mRefreshView.setEnabled(true);
+                    } else {
+                        mRefreshView.setEnabled(false);
+                    }
+                }
+            });
         }
     }
 
@@ -75,7 +142,7 @@ public abstract class BaseActivity extends AbsBaseActivity implements View.OnCli
     }
 
     protected void setTitleCenterView(View view){
-        if(view == null) {
+        if (view == null) {
             setTitle("测试");
         }else{
             TextView tv_base_title = (TextView) findViewById(R.id.tv_base_title);
@@ -130,5 +197,11 @@ public abstract class BaseActivity extends AbsBaseActivity implements View.OnCli
                 }
             });
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(mRefreshView!=null)mRefreshView.setRefreshing(false);
     }
 }
