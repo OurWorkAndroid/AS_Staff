@@ -1,12 +1,17 @@
 package com.staff.activities.base;
 
+import android.annotation.TargetApi;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Window;
+import android.view.WindowManager;
 
+import com.staff.main.R;
 import com.staff.utils.ActivityManagerUtils;
+import com.staff.utils.SystemBarTintManager;
 
 import java.util.List;
 
@@ -21,8 +26,29 @@ public class AbsBaseActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        ActivityManagerUtils.getActivityManager().add(this);
+        setTheme(R.style.MyApp_NoTitle);
+
+       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        setTranslucentStatus(true);
+        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+        tintManager.setStatusBarTintEnabled(true);
+        tintManager.setStatusBarTintResource(R.color.theme);//通知栏所需颜色
+    }
+    ActivityManagerUtils.getActivityManager().add(this);
+    }
+
+
+    @TargetApi(19)
+    private void setTranslucentStatus(boolean on) {
+        Window win = getWindow();
+        WindowManager.LayoutParams winParams = win.getAttributes();
+        final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+        if (on) {
+            winParams.flags |= bits;
+        } else {
+            winParams.flags &= ~bits;
+        }
+        win.setAttributes(winParams);
     }
 
     /**

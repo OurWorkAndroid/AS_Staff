@@ -27,6 +27,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
@@ -160,6 +161,12 @@ public final class QRCodeCaptureActivity extends BaseActivity implements Surface
 		beepManager = new BeepManager(this);
 		ambientLightManager = new AmbientLightManager(this);
 	}
+
+	@Override
+	public int getContentLayoutID() {
+		return 1;
+	}
+
 
 	/**
 	 * 生成菜单popupwindow
